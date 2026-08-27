@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquitectura — Diseñamos tu proyecto | Disrupción Urbana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#1414E6; --azul-hover:#0F0FC2; --azul-tinte:#EEF0FF;
+    --tinta:#0A0A18; --gris:#5A5E72; --linea:#DCDFF2; --blanco:#FFF; --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--tinta);background:var(--blanco);min-height:100vh;display:flex}
+
+  .panel-marca{width:42%;background:var(--azul);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:48px 44px;position:relative;overflow:hidden}
+  .panel-marca::after{content:'';position:absolute;right:-140px;bottom:-140px;width:420px;height:420px;border:36px solid rgba(255,255,255,.08);border-radius:50% 50% 50% 8%;transform:rotate(-8deg);pointer-events:none}
+  .logo-linea{display:flex;align-items:center;gap:14px}
+  .logo-mark{width:52px;height:52px;flex-shrink:0}
+  .logo-nombre{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.3}
+  .etiqueta-campana{display:inline-block;font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px;margin-bottom:18px}
+  .marca-centro h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.12;letter-spacing:-.01em;max-width:15ch}
+  .marca-centro p{margin-top:18px;font-size:.98rem;line-height:1.65;color:rgba(255,255,255,.82);max-width:34ch}
+  .beneficios{margin-top:26px;display:flex;flex-direction:column;gap:10px}
+  .beneficio{display:flex;align-items:center;gap:10px;font-size:.88rem;color:rgba(255,255,255,.9)}
+  .beneficio span.punto{width:6px;height:6px;background:#fff;border-radius:50%;flex-shrink:0}
+  .marca-pie{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+  .panel-form{width:58%;display:flex;flex-direction:column;justify-content:center;padding:48px clamp(32px,6vw,96px)}
+  .modulos{display:flex;gap:8px;margin-bottom:40px}
+  .modulo{height:8px;flex:1;background:var(--linea);border-radius:4px;transition:background .35s ease}
+  .modulo.activo{background:var(--azul)}
+
+  .paso{display:none;animation:entra .35s ease}
+  .paso.visible{display:block}
+  @keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion:reduce){.paso{animation:none}}
+
+  .paso-etiqueta{font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--azul);margin-bottom:10px}
+  .paso h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.4rem,2.4vw,1.9rem);line-height:1.2;margin-bottom:8px}
+  .paso .ayuda{color:var(--gris);font-size:.95rem;margin-bottom:28px;line-height:1.55}
+
+  .opciones{display:grid;gap:12px}
+  .opciones.dos-col{grid-template-columns:1fr 1fr}
+  @media (max-width:680px){.opciones.dos-col{grid-template-columns:1fr}}
+  .opcion{border:1.5px solid var(--linea);border-radius:var(--radius);padding:18px 20px;cursor:pointer;background:#fff;text-align:left;font-family:'Inter',sans-serif;transition:border-color .2s,background .2s,transform .12s}
+  .opcion:hover{border-color:var(--azul)}
+  .opcion:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+  .opcion:active{transform:scale(.985)}
+  .opcion.elegida{border-color:var(--azul);background:var(--azul-tinte)}
+  .opcion .titulo{font-weight:600;font-size:1rem;display:block}
+  .opcion .detalle{font-size:.84rem;color:var(--gris);margin-top:3px;display:block;line-height:1.45}
+
+  .campo{margin-bottom:20px}
+  .campo label{display:block;font-size:.85rem;font-weight:600;margin-bottom:8px}
+  .campo input,.campo select,.campo textarea{width:100%;padding:14px 16px;border:1.5px solid var(--linea);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:.98rem;color:var(--tinta);background:#fff;transition:border-color .2s}
+  .campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;border-color:var(--azul)}
+  .campo textarea{resize:vertical;min-height:80px}
+  .campos-fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:680px){.campos-fila{grid-template-columns:1fr}}
+
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{border:1.5px solid var(--linea);background:#fff;border-radius:999px;padding:11px 20px;font-family:'Inter',sans-serif;font-size:.92rem;font-weight:500;cursor:pointer;transition:border-color .2s,background .2s}
+  .chip:hover{border-color:var(--azul)}
+  .chip.elegida{border-color:var(--azul);background:var(--azul-tinte);color:var(--azul)}
+  .chip:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+  .nota-multi{font-size:.8rem;color:var(--gris);margin-top:10px}
+
+  .nav-pasos{display:flex;justify-content:space-between;align-items:center;margin-top:36px;gap:16px}
+  .btn{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;padding:15px 32px;border-radius:999px;border:none;cursor:pointer;transition:background .2s,transform .12s}
+  .btn:active{transform:scale(.97)}
+  .btn:focus-visible{outline:3px solid var(--azul);outline-offset:3px}
+  .btn-principal{background:var(--azul);color:#fff}
+  .btn-principal:hover{background:var(--azul-hover)}
+  .btn-principal:disabled{background:var(--linea);color:var(--gris);cursor:not-allowed}
+  .btn-fantasma{background:transparent;color:var(--gris);padding-left:0}
+  .btn-fantasma:hover{color:var(--tinta)}
+
+  .final{text-align:center;padding:20px 0}
+  .final .marca-final{width:64px;height:64px;margin:0 auto 24px}
+  .final h2{margin-bottom:12px}
+  .final p{color:var(--gris);max-width:44ch;margin:0 auto 30px;line-height:1.6}
+  .final .btn-principal{display:inline-block;text-decoration:none}
+
+  @media (max-width:900px){
+    body{flex-direction:column}
+    .panel-marca{width:100%;padding:32px 28px;gap:16px}
+    .panel-marca::after{display:none}
+    .marca-centro h1{font-size:1.5rem;max-width:none}
+    .marca-centro p,.beneficios,.marca-pie{display:none}
+    .panel-form{width:100%;padding:36px 24px 60px}
+  }
+</style>
+</head>
+<body>
+
+<aside class="panel-marca">
+  <div class="logo-linea">
+    <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M30 8 H54 C77 8 92 26 92 50 C92 74 77 92 54 92 H40 C26 92 18 84 17 72 L28 70 C29 77 33 81 40 81 H54 C70 81 81 68 81 50 C81 32 70 19 54 19 H41 V56 C41 61 38 64 33 64 C29.5 64 27.5 62 27 59 L30 58.5 V8 Z" fill="#FFFFFF"/>
+    </svg>
+    <span class="logo-nombre">Disrupción<br>Urbana</span>
+  </div>
+
+  <div class="marca-centro">
+    <div class="etiqueta-campana">Arquitectura</div>
+    <h1>Tu proyecto, resuelto de principio a fin</h1>
+    <p>Diseño, ejecutivo y construcción bajo un mismo techo. Sin experimentar con tu patrimonio ni improvisar en obra.</p>
+    <div class="beneficios">
+      <div class="beneficio"><span class="punto"></span>Un solo responsable del proyecto completo</div>
+      <div class="beneficio"><span class="punto"></span>Costos y tiempos definidos desde el inicio</div>
+      <div class="beneficio"><span class="punto"></span>Diseño sostenible con criterio Net Zero</div>
+    </div>
+  </div>
+
+  <div class="marca-pie">CDMX · Guadalajara · Net Zero Habitat</div>
+</aside>
+
+<main class="panel-form">
+  <div class="modulos" aria-hidden="true">
+    <div class="modulo activo"></div><div class="modulo"></div><div class="modulo"></div><div class="modulo"></div>
+  </div>
+
+  <form id="formArq" novalidate>
+
+    <section class="paso visible" data-paso="1">
+      <div class="paso-etiqueta">Paso 1 de 4</div>
+      <h2>¿Qué proyecto tienes en mente?</h2>
+      <p class="ayuda">Elige el que más se acerque a lo que quieres construir.</p>
+      <div class="opciones dos-col" role="group" aria-label="Tipo de proyecto">
+        <button type="button" class="opcion" data-campo="tipo" data-valor="Casa">
+          <span class="titulo">Casa</span><span class="detalle">Residencia unifamiliar, obra nueva</span>
+        </button>
+        <button type="button" class="opcion" data-campo="tipo" data-valor="Departamento o edificio">
+          <span class="titulo">Departamento o edificio</span><span class="detalle">Vivienda vertical o multifamiliar</span>
+        </button>
+        <button type="button" class="opcion" data-campo="tipo" data-valor="Remodelación">
+          <span class="titulo">Remodelación</span><span class="detalle">Renovar o reconfigurar lo existente</span>
+        </button>
+        <button type="button" class="opcion" data-campo="tipo" data-valor="Comercial o de uso mixto">
+          <span class="titulo">Comercial o mixto</span><span class="detalle">Local, oficina, hotelería o mixto</span>
+        </button>
+        <button type="button" class="opcion" data-campo="tipo" data-valor="Otro">
+          <span class="titulo">Otro proyecto</span><span class="detalle">Lo platicamos en la llamada</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="paso" data-paso="2">
+      <div class="paso-etiqueta">Paso 2 de 4</div>
+      <h2>¿Qué servicio necesitas?</h2>
+      <p class="ayuda">Puedes elegir varios. Si no estás seguro, elige lo que más se acerque.</p>
+      <div class="chips" id="chipsServicio" role="group" aria-label="Servicios">
+        <button type="button" class="chip" data-valor="Diseño arquitectónico">Diseño arquitectónico</button>
+        <button type="button" class="chip" data-valor="Proyecto ejecutivo">Proyecto ejecutivo</button>
+        <button type="button" class="chip" data-valor="Remodelación">Remodelación</button>
+        <button type="button" class="chip" data-valor="Supervisión">Supervisión</button>
+        <button type="button" class="chip" data-valor="Construcción">Construcción</button>
+        <button type="button" class="chip" data-valor="Aún no lo sé">Aún no lo sé</button>
+      </div>
+      <p class="nota-multi">Selección múltiple — elige todas las que apliquen.</p>
+    </section>
+
+    <section class="paso" data-paso="3">
+      <div class="paso-etiqueta">Paso 3 de 4</div>
+      <h2>¿En qué etapa está?</h2>
+      <p class="ayuda">Nos ayuda a saber por dónde empezar contigo.</p>
+
+      <div class="campo">
+        <label>¿Ya tienes terreno o propiedad?</label>
+        <div class="chips" role="group" aria-label="Terreno">
+          <button type="button" class="chip" data-campo="terreno" data-valor="Sí, ya lo tengo">Sí, ya lo tengo</button>
+          <button type="button" class="chip" data-campo="terreno" data-valor="Estoy buscando">Estoy buscando</button>
+          <button type="button" class="chip" data-campo="terreno" data-valor="Aún no">Aún no</button>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="etapa">Etapa actual del proyecto</label>
+        <select id="etapa">
+          <option value="" selected disabled>Selecciona una opción</option>
+          <option>Solo tengo la idea</option>
+          <option>Tengo el terreno y quiero empezar el diseño</option>
+          <option>Ya tengo un anteproyecto o planos</option>
+          <option>Listo para construir</option>
+          <option>Obra iniciada, necesito apoyo</option>
+        </select>
+      </div>
+
+      <div class="campos-fila">
+        <div class="campo">
+          <label for="superficie">Superficie aproximada (m²)</label>
+          <select id="superficie">
+            <option value="" selected disabled>Selecciona un rango</option>
+            <option>Menos de 150 m²</option>
+            <option>150 – 300 m²</option>
+            <option>300 – 600 m²</option>
+            <option>Más de 600 m²</option>
+            <option>Aún no lo sé</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="cuando">¿Cuándo te gustaría iniciar?</label>
+          <select id="cuando">
+            <option value="" selected disabled>Selecciona una opción</option>
+            <option>En el próximo mes</option>
+            <option>En 1 a 3 meses</option>
+            <option>En 3 a 6 meses</option>
+            <option>Más adelante — estoy explorando</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="ubicacion">¿Dónde se ubica el proyecto?</label>
+        <input type="text" id="ubicacion" placeholder="Ciudad, colonia o zona" autocomplete="address-level2">
+      </div>
+    </section>
+
+    <section class="paso" data-paso="4">
+      <div class="paso-etiqueta">Paso 4 de 4</div>
+      <h2>¿Cómo te contactamos?</h2>
+      <p class="ayuda">Te escribimos en menos de 15 minutos dentro de horario, o agenda tú mismo al terminar.</p>
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="name" required>
+      </div>
+      <div class="campos-fila">
+        <div class="campo">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" placeholder="+52 ..." autocomplete="tel" required>
+        </div>
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" placeholder="tu@correo.com" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="descripcion">Cuéntanos brevemente tu proyecto <span style="color:var(--gris);font-weight:400">(opcional)</span></label>
+        <textarea id="descripcion" placeholder="Ya tengo el terreno en... / Busco un diseño que..."></textarea>
+      </div>
+    </section>
+
+    <section class="paso" data-paso="final">
+      <div class="final">
+        <svg class="marca-final" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M30 8 H54 C77 8 92 26 92 50 C92 74 77 92 54 92 H40 C26 92 18 84 17 72 L28 70 C29 77 33 81 40 81 H54 C70 81 81 68 81 50 C81 32 70 19 54 19 H41 V56 C41 61 38 64 33 64 C29.5 64 27.5 62 27 59 L30 58.5 V8 Z" fill="#1414E6"/>
+        </svg>
+        <div class="paso-etiqueta">Listo</div>
+        <h2>Recibimos tu proyecto</h2>
+        <p>Un arquitecto del equipo te contactará muy pronto. Si prefieres elegir tú el horario, agenda tu llamada de 30 minutos ahora mismo.</p>
+        <a class="btn btn-principal" href="#" id="linkAgenda" target="_blank" rel="noopener">Agendar mi llamada</a>
+      </div>
+    </section>
+
+    <div class="nav-pasos" id="navPasos">
+      <button type="button" class="btn btn-fantasma" id="btnAtras" style="visibility:hidden">← Atrás</button>
+      <button type="button" class="btn btn-principal" id="btnSiguiente" disabled>Siguiente</button>
+    </div>
+  </form>
+</main>
+
+<script>
+  const URL_AGENDA = 'https://calendly.com/disrupcion-urbana/arquitectura';
+  const WEBHOOK = '';
+
+  const datos = { campana: 'arquitectura', servicios: [] };
+  let paso = 1;
+  const TOTAL = 4;
+
+  const pasos = document.querySelectorAll('.paso');
+  const modulos = document.querySelectorAll('.modulo');
+  const btnAtras = document.getElementById('btnAtras');
+  const btnSig = document.getElementById('btnSiguiente');
+  const nav = document.getElementById('navPasos');
+  document.getElementById('linkAgenda').href = URL_AGENDA;
+
+  function render(n){
+    pasos.forEach(p => p.classList.remove('visible'));
+    document.querySelector('[data-paso="'+n+'"]').classList.add('visible');
+    modulos.forEach((m,i) => m.classList.toggle('activo', typeof n === 'number' && i < n));
+    if(n === 'final'){ nav.style.display = 'none'; return; }
+    nav.style.display = 'flex';
+    btnAtras.style.visibility = n > 1 ? 'visible' : 'hidden';
+    btnSig.textContent = n === TOTAL ? 'Enviar mi proyecto' : 'Siguiente';
+    validar(n);
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function validar(n){
+    let ok = false;
+    if(n === 1) ok = !!datos.tipo;
+    if(n === 2) ok = datos.servicios.length > 0;
+    if(n === 3) ok = !!datos.terreno && document.getElementById('etapa').value !== '' &&
+                     document.getElementById('superficie').value !== '' &&
+                     document.getElementById('cuando').value !== '' &&
+                     document.getElementById('ubicacion').value.trim() !== '';
+    if(n === 4) ok = document.getElementById('nombre').value.trim() !== '' &&
+                     document.getElementById('whatsapp').value.trim().length >= 10 &&
+                     document.getElementById('correo').value.includes('@');
+    btnSig.disabled = !ok;
+  }
+
+  document.querySelectorAll('.opcion').forEach(el => {
+    el.addEventListener('click', () => {
+      datos[el.dataset.campo] = el.dataset.valor;
+      el.closest('.opciones').querySelectorAll('.opcion').forEach(o => o.classList.remove('elegida'));
+      el.classList.add('elegida');
+      validar(paso);
+      setTimeout(() => { paso++; render(paso); }, 260);
+    });
+  });
+
+  document.querySelectorAll('#chipsServicio .chip').forEach(el => {
+    el.addEventListener('click', () => {
+      const v = el.dataset.valor;
+      el.classList.toggle('elegida');
+      if(el.classList.contains('elegida')) datos.servicios.push(v);
+      else datos.servicios = datos.servicios.filter(s => s !== v);
+      validar(paso);
+    });
+  });
+
+  document.querySelectorAll('.chip[data-campo]').forEach(el => {
+    el.addEventListener('click', () => {
+      datos[el.dataset.campo] = el.dataset.valor;
+      el.closest('.chips').querySelectorAll('.chip').forEach(o => o.classList.remove('elegida'));
+      el.classList.add('elegida');
+      validar(paso);
+    });
+  });
+
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('input', () => validar(paso));
+    el.addEventListener('change', () => validar(paso));
+  });
+
+  btnSig.addEventListener('click', () => {
+    if(paso === TOTAL){
+      datos.etapa = document.getElementById('etapa').value;
+      datos.superficie = document.getElementById('superficie').value;
+      datos.cuando = document.getElementById('cuando').value;
+      datos.ubicacion = document.getElementById('ubicacion').value.trim();
+      datos.nombre = document.getElementById('nombre').value.trim();
+      datos.whatsapp = document.getElementById('whatsapp').value.trim();
+      datos.correo = document.getElementById('correo').value.trim();
+      datos.descripcion = document.getElementById('descripcion').value.trim();
+      if(WEBHOOK){
+        fetch(WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(datos)});
+      }
+      console.log('Lead Arquitectura:', datos);
+      render('final');
+      return;
+    }
+    paso++;
+    render(paso);
+  });
+
+  btnAtras.addEventListener('click', () => { if(paso > 1){ paso--; render(paso); } });
+
+  render(1);
+</script>
+</body>
+</html>

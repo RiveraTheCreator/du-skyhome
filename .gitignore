@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+build/
+
+# Vercel
+.vercel/
+
+# Environment and local files
+.env*
+!.env.example
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Local Docker artifacts
+docker-compose.override.yml

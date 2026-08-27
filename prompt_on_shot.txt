@@ -1,0 +1,136 @@
+# ENCARGO: Landing page de conversión para Sky Home — Disrupción Urbana
+
+Actúa como un diseñador y desarrollador frontend senior especializado en landing pages de alto valor. Vas a construir una página completa, funcional y lista para producción. No entregues wireframes ni bocetos: entrega el código final.
+
+## Contexto del negocio
+- Marca: Disrupción Urbana
+- Producto: Sky Home
+- Industria: Construcción modular sostenible — CDMX y Guadalajara, México
+- Qué es: Ampliación habitacional modular construida sobre azoteas y espacios subutilizados de casas ya existentes, con diseño arquitectónico e ingeniería profesional.
+- Objetivo de la página: Generar leads calificados (formulario + agendamiento)
+
+## Audiencia
+- Cliente ideal: Propietario de casa en zona metropolitana que necesita más espacio (recámara para un familiar) o que quiere generar un departamento independiente para rentar. Tiene patrimonio, valora el respaldo profesional y desconfía de la obra tradicional.
+- Dolor principal: Tiene un espacio muerto en su azotea que no genera nada, y necesita más metros habitables sin mudarse ni meterse en una obra de años.
+- Compite contra: Autoconstrucción informal con maestro de obra, sin proyecto ni cálculo estructural
+
+## Objeciones a resolver dentro de la página
+La página debe anticipar y responder estas objeciones antes de que el visitante las formule:
+- ¿Mi casa aguanta estructuralmente?
+- Las obras se alargan indefinidamente
+- Sale más barato con un maestro de obra
+- ¿Necesito permisos y quién los tramita?
+- ¿Puedo ver un proyecto terminado?
+
+## Propuesta de valor
+- Headline principal: Tu azotea puede ser un departamento que genera ingresos
+- Subheadline: La mayoría de las azoteas en México solo sirven para tender ropa. La tuya puede convertirse en un activo en aproximadamente 4 meses.
+
+Pilares de valor (cada uno debe tener su propio espacio visual):
+- Velocidad — un tercio del tiempo de la construcción tradicional, sin obras eternas
+- Respaldo profesional — arquitectos e ingenieros con cálculo estructural real, no intuición
+- Estética y diseño — arquitectura integrada, no un cuarto agregado
+- Aprovechamiento de espacio muerto — conviertes metros sin uso en metros rentables
+- Sustentabilidad — estrategia de eficiencia energética y opción de tecnologías fotovoltaicas
+
+Respaldo y prueba: Construcción con panel estructural ligero. El 80% de las propiedades califican gracias a la sobredimensión estructural típica de la construcción tradicional. Equipo de arquitectura e ingeniería propio.
+
+## Oferta
+- Precio: $15,500 MXN por m² [POR CONFIRMAR]
+- Mínimo: 20 m² [POR CONFIRMAR]
+- Tiempo de entrega: 4 meses [VERIFICAR: en sesión previa se manejaron 6 meses — 3 de diseño + 3 de ejecución]
+- Esquemas de pago: Capital propio con anticipo y pagos por avance de obra, o crédito de autofinanciamiento (el cliente aporta 33% del capital)
+
+Incluye:
+- Diseño arquitectónico
+- Diseño de instalaciones hidráulicas y eléctricas
+- Proyecto ejecutivo
+- Cálculo estructural
+- Estrategia de sustentabilidad
+- Planos de permisos y memoria descriptiva
+- Asesoría financiera del esquema de pago
+
+NO incluye (debe quedar explícito en la página para no generar falsas expectativas):
+- Gestoría y trámite de permisos ante el municipio
+- Estudios de impacto ambiental
+- Estudios de tránsito
+
+## Estructura de la página
+Construye las secciones en este orden exacto:
+1. Hero con propuesta de valor
+2. Problema / situación actual
+3. Cómo funciona (proceso por pasos)
+4. Pilares de valor
+5. Galería de renders / proyectos
+6. Ejercicio financiero / ROI
+7. Qué incluye y qué no
+8. Comparativa vs. alternativa
+9. Prueba social / respaldo técnico
+10. Preguntas frecuentes
+11. Sección de conversión final
+12. Footer con contacto
+
+## Sistema de diseño
+Aplica estos valores de forma estricta y consistente:
+- Color primario: #1414E6
+- Color de fondo: #FFFFFF
+- Tipografía de títulos: Space Grotesk (700 para headlines)
+- Tipografía de cuerpo: Inter (400/500)
+- Tono de comunicación: Profesional y directo — sin relleno corporativo
+- Dirección estética: Arquitectónico y limpio. Mucho aire, renders como protagonistas, geometría modular sutil como elemento gráfico recurrente.
+
+Reglas de diseño:
+- Jerarquía tipográfica clara: contraste fuerte entre título y cuerpo, no tamaños intermedios ambiguos.
+- Espaciado generoso entre secciones. El aire es parte del posicionamiento de alto valor.
+- Una sola familia de acentos de color. No introduzcas colores adicionales por decoración.
+- Nada de gradientes genéricos, sombras difusas ni estética de plantilla.
+- Los CTAs deben ser visualmente inequívocos y repetirse a lo largo del scroll.
+
+## Assets disponibles
+- Material existente: Renders del modelo Sky Home (en producción), logo en SVG (isotipo D azul). Sin fotografía de obra terminada todavía.
+- Logo: Isotipo "D" en azul #1414E6, se entrega en SVG aparte
+Para cualquier imagen que no exista todavía, usa contenedores con proporción definida y un marcador claro de qué imagen va ahí. No uses imágenes de stock ni placeholders grises sin indicación.
+- Formularios de cualificacion.
+
+## Conversión
+- CTA principal: "Agenda tu llamada"
+- Destino: POST a webhook de n8n → HubSpot, más liga de agendamiento Calendly
+- Campos del formulario:
+  - Nombre completo
+  - WhatsApp
+  - Correo electrónico
+  - Ubicación de la propiedad
+  - Zona de la extensión (azotea, patio, terreno anexo)
+  - Uso previsto del espacio
+- El formulario debe validar en vivo y deshabilitar el envío hasta que los campos requeridos estén completos.
+- Al enviar, muestra un estado de confirmación claro dentro de la misma página.
+
+## Requisitos técnicos
+- Stack: Next.js + Tailwind
+- Responsive mobile-first
+- Accesible (contraste AA, foco visible, ARIA)
+- Meta tags y Open Graph
+- Optimizado: sin librerías pesadas
+- Animaciones sutiles al scroll
+- Espacio para píxel de Meta / analytics
+- Respeta prefers-reduced-motion
+- Copy final en español, sin lorem ipsum
+- No uses localStorage ni sessionStorage.
+- Código legible y comentado en las secciones clave.
+
+## Reglas de copy
+- Todo el texto en español de México, tono profesional y directo.
+- Cero lorem ipsum: escribe el copy real de cada sección con la información de este brief.
+- No inventes cifras, plazos, certificaciones ni testimonios que no estén en este documento. Si falta un dato, deja un marcador visible del tipo [POR CONFIRMAR: dato].
+- Frases cortas. Cada línea debe ganarse su lugar en la página.
+
+## Criterios de aceptación
+La entrega se considera completa cuando:
+1. Todas las secciones listadas existen y tienen copy real, no marcadores.
+2. El diseño se ve intencional y distinto de una plantilla genérica.
+3. Funciona correctamente en móvil (360px) y escritorio (1440px).
+4. Los CTAs son visibles sin necesidad de buscarlos.
+5. Las objeciones listadas están resueltas en algún punto del scroll.
+6. Ningún dato inventado: lo que no estaba en el brief aparece como [POR CONFIRMAR].
+
+Entrega el código completo (nextjs, taiwild), listo para desplegar en `docker-compose up --build` y de forma nativa.

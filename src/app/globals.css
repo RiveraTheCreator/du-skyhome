@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --azul: #1414E6;
+  --azul-hover: #0F0FC2;
+  --azul-tinte: #EEF0FF;
+  --tinta: #0A0A18;
+  --gris: #5A5E72;
+  --linea: #DCDFF2;
+  --blanco: #FFFFFF;
+  --radius: 14px;
+}
+
+@theme inline {
+  --color-primary: var(--azul);
+  --color-primary-hover: var(--azul-hover);
+  --color-primary-tint: var(--azul-tinte);
+  --color-ink: var(--tinta);
+  --color-gray: var(--gris);
+  --color-line: var(--linea);
+  --color-white: var(--blanco);
+  --radius-custom: var(--radius);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-display: var(--font-space-grotesk), sans-serif;
+}
+
+body {
+  background: var(--blanco);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+}
