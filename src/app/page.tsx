@@ -118,7 +118,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Problema / Situación actual */}
+      {/* 2. Tecnología estructural */}
+      <section className="py-24 md:py-32 px-6 bg-ink text-white text-center relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full max-h-96 border-[1px] border-white/5 rounded-[100%] pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-10 leading-tight">Tecnología estructural probada para azoteas mexicanas.</h2>
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed md:px-12">
+              El <strong>80% de las propiedades</strong> califican para una extensión gracias a la sobredimensión estructural típica de la construcción tradicional en el país.
+              Utilizamos un sistema de <strong>panel estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 3. Problema / Situación actual */}
       <section className="py-24 md:py-32 px-6 bg-white border-b border-line relative">
         <div className="max-w-5xl mx-auto">
           <Reveal>
@@ -155,7 +171,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Cómo funciona */}
+      {/* 4. Cómo funciona */}
       <section className="py-24 md:py-32 px-6 bg-primary text-white relative overflow-hidden">
         {/* Subtle background geometry */}
         <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] border-[1px] border-white/10 rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -317,22 +333,6 @@ export default function Home() {
                 * Te entregamos toda la documentación técnica necesaria para que puedas gestionar tus permisos fácilmente o contratar a un gestor independiente.
               </p>
             </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* 9. Prueba social / Respaldo técnico */}
-      <section className="py-24 md:py-32 px-6 bg-ink text-white text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full max-h-96 border-[1px] border-white/5 rounded-[100%] pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <Reveal>
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-10 leading-tight">Tecnología estructural probada para azoteas mexicanas.</h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed md:px-12">
-              El <strong>80% de las propiedades</strong> califican para una extensión gracias a la sobredimensión estructural típica de la construcción tradicional en el país. 
-              Utilizamos un sistema de <strong>panel estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
-            </p>
           </Reveal>
         </div>
       </section>
