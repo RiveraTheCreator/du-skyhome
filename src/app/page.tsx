@@ -104,7 +104,9 @@ export default function Home() {
           </div>
           <div className="md:w-1/2 w-full h-[50vh] md:h-[70vh] relative mt-12 md:mt-0">
             <Reveal delay={200} className="w-full h-full relative">
-              <div className="absolute inset-0 bg-primary-tint transform -translate-x-4 translate-y-4 rounded-2xl"></div>
+              {/* Overlay / backdrop degradado más transparente para el 'video' o imagen hero */}
+              <div className="absolute inset-0 bg-primary-tint/40 transform -translate-x-4 translate-y-4 rounded-2xl"></div>
+              <div className="absolute inset-0 bg-primary/5 rounded-2xl z-20 pointer-events-none"></div> {/* Subtle transparent overlay in front */}
               <img src="/renders/roofpanoramic01.jpeg" alt="Sky Home Render" className="w-full h-full object-cover rounded-2xl relative z-10 shadow-[0_0_0_1px_rgba(0,0,0,0.05)]" />
               {/* Subtle architectural grid lines */}
               <div className="absolute top-1/2 -right-12 w-24 h-px bg-primary/20 z-0 hidden md:block"></div>
@@ -151,33 +153,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Cómo funciona */}
-      <section className="py-24 md:py-32 px-6 bg-primary text-white relative overflow-hidden">
-        {/* Subtle background geometry */}
-        <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] border-[1px] border-white/10 rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <Reveal>
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-16 md:mb-24">Cómo construimos tu Sky Home</h2>
-          </Reveal>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-0">
-            {[
-              { num: "01", title: "Diseño y Proyecto", desc: "Arquitectura adaptada a tus necesidades y al espacio de tu propiedad." },
-              { num: "02", title: "Ingeniería", desc: "Cálculo estructural preciso para garantizar la seguridad de la ampliación." },
-              { num: "03", title: "Fabricación", desc: "Construcción modular con panel estructural ligero, limpio y eficiente." },
-              { num: "04", title: "Montaje en sitio", desc: "Instalación rápida que reduce al mínimo las molestias y escombros." }
-            ].map((paso, idx) => (
-              <Reveal key={paso.num} delay={idx * 150} className="relative md:px-8 md:border-l border-white/20 first:border-l-0 pt-6 md:pt-0">
-                <div className="text-white/40 font-display font-bold text-4xl md:text-5xl mb-4 md:mb-8">{paso.num}</div>
-                <h3 className="font-bold text-xl mb-3">{paso.title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{paso.desc}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Pilares de valor & 5. Galería (Integrated for better flow) */}
+      {/* 3. Pilares de valor & 5. Galería (MOVIDA A LA SECCIÓN 3) */}
       <section className="py-24 md:py-32 bg-white border-b border-line overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-24">
           <Reveal>
@@ -229,6 +205,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4. Cómo funciona (AHORA SECCIÓN 4) */}
+      <section className="py-24 md:py-32 px-6 bg-primary text-white relative overflow-hidden">
+        {/* Subtle background geometry */}
+        <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] border-[1px] border-white/10 rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-16 md:mb-24">Cómo construimos tu Sky Home</h2>
+          </Reveal>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-0">
+            {[
+              { num: "01", title: "Diseño y Proyecto", desc: "Arquitectura adaptada a tus necesidades y al espacio de tu propiedad." },
+              { num: "02", title: "Ingeniería", desc: "Cálculo estructural preciso para garantizar la seguridad de la ampliación." },
+              { num: "03", title: "Fabricación", desc: "Construcción modular con sistema estructural ligero, limpio y eficiente." },
+              { num: "04", title: "Montaje en sitio", desc: "Instalación rápida que reduce al mínimo las molestias y escombros." }
+            ].map((paso, idx) => (
+              <Reveal key={paso.num} delay={idx * 150} className="relative md:px-8 md:border-l border-white/20 first:border-l-0 pt-6 md:pt-0">
+                <div className="text-white/40 font-display font-bold text-4xl md:text-5xl mb-4 md:mb-8">{paso.num}</div>
+                <h3 className="font-bold text-xl mb-3">{paso.title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{paso.desc}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 6. Ejercicio financiero / ROI */}
       <section className="py-24 md:py-32 px-6 bg-primary-tint">
         <div className="max-w-5xl mx-auto">
@@ -239,15 +241,13 @@ export default function Home() {
             
             <div className="grid md:grid-cols-2 gap-12 divide-y md:divide-y-0 md:divide-x divide-line">
               <Reveal delay={100} className="flex flex-col items-center md:items-start text-center md:text-left">
-                <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">Precio estimado</p>
+                <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">DESDE</p>
                 <p className="text-5xl font-display font-bold text-primary mb-2">$15,500 <span className="text-xl text-ink font-sans font-normal">MXN / m²</span></p>
-                <p className="text-xs text-gray font-medium">[POR CONFIRMAR]</p>
               </Reveal>
               
               <Reveal delay={200} className="flex flex-col items-center md:items-start text-center md:text-left pt-12 md:pt-0 md:pl-12">
                 <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">Mínimo de construcción</p>
                 <p className="text-5xl font-display font-bold text-ink mb-2">20 <span className="text-xl font-sans font-normal">m²</span></p>
-                <p className="text-xs text-gray font-medium">[POR CONFIRMAR]</p>
               </Reveal>
             </div>
 
@@ -327,7 +327,7 @@ export default function Home() {
           <Reveal delay={100}>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed md:px-12">
               El <strong>80% de las propiedades</strong> califican para una extensión gracias a la sobredimensión estructural típica de la construcción tradicional en el país. 
-              Utilizamos un sistema de <strong>panel estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
+              Utilizamos un <strong>sistema estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
             </p>
           </Reveal>
         </div>
@@ -341,7 +341,7 @@ export default function Home() {
           </Reveal>
           <div className="space-y-6">
             {[
-              { q: "¿Mi casa aguanta estructuralmente?", a: "Realizamos un cálculo estructural real liderado por ingenieros profesionales para asegurar que tu propiedad soporta el panel ligero sin riesgos." },
+              { q: "¿Mi casa aguanta estructuralmente?", a: "Realizamos un cálculo estructural real liderado por ingenieros profesionales para asegurar que tu propiedad soporta el sistema estructural sin riesgos." },
               { q: "¿Necesito permisos y quién los tramita?", a: "Sí se requieren permisos. Nosotros te entregamos los planos y la memoria descriptiva, pero el trámite y la gestoría ante el municipio corren por tu cuenta." },
               { q: "¿Puedo ver un proyecto terminado?", a: "Nuestros primeros modelos Sky Home se encuentran actualmente en fase de producción. Te mostraremos renders de alta fidelidad y detalles técnicos completos en nuestra llamada." }
             ].map((faq, idx) => (
