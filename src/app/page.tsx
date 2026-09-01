@@ -60,10 +60,14 @@ export default function Home() {
   };
 
   const isPasoValid = (step: number) => {
-    if (step === 1) return !!formData.zona;
-    if (step === 2) return !!formData.uso;
-    if (step === 3) return !!formData.construida && !!formData.metros && !!formData.cuando && !!formData.ubicacion.trim();
-    if (step === 4) return !!formData.nombre.trim() && formData.whatsapp.replace(/\D/g,'').length >= 10 && formData.correo.includes("@");
+    if (step === 1) return Boolean(formData.zona);
+    if (step === 2) return Boolean(formData.uso);
+    if (step === 3) return Boolean(formData.construida && formData.metros && formData.cuando && formData.ubicacion.trim());
+    if (step === 4) {
+      const phoneDigits = formData.whatsapp.replace(/\D/g, "");
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.correo.trim());
+      return Boolean(formData.nombre.trim()) && phoneDigits.length >= 10 && validEmail;
+    }
     return false;
   };
 
@@ -77,83 +81,67 @@ export default function Home() {
   return (
     <main className="w-full selection:bg-primary selection:text-white">
       {/* 1. Hero */}
-      <section className="bg-white text-ink pt-28 pb-24 md:pt-40 md:pb-32 px-6 relative border-b border-line">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          <div className="md:w-1/2 relative z-10">
+      <section className="relative isolate flex min-h-[clamp(620px,88vh,900px)] items-center overflow-hidden bg-ink px-6 py-28 text-white md:py-36">
+        <video
+          className="absolute inset-0 -z-20 size-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/videos/skyhome_video.mp4" type="video/mp4" />
+        </video>
+        {/* Adjusted gradients for more transparency so the video shows better */}
+        <div className="absolute inset-0 -z-10 bg-ink/20" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/50 via-ink/20 to-transparent" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink/30 to-transparent" aria-hidden="true" />
+
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="max-w-3xl">
             <Reveal>
-              <div className="inline-block border border-primary text-primary text-xs font-display font-bold uppercase tracking-[0.2em] py-2 px-4 rounded-full mb-8">
+              <div className="mb-8 inline-flex border border-white/60 px-4 py-2 text-xs font-display font-bold uppercase tracking-[0.2em]">
                 Sky Home
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] mb-8 tracking-tight">
+              <h1 className="max-w-4xl text-balance font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
                 Tu azotea puede ser un departamento que genera ingresos.
               </h1>
             </Reveal>
             <Reveal delay={200}>
-              <p className="text-lg md:text-xl text-gray mb-12 max-w-lg leading-relaxed">
+              <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-white/85 md:text-xl">
                 La mayoría de las azoteas en México solo sirven para tender ropa. La tuya puede convertirse en un activo rentable en aproximadamente 4 meses.
               </p>
             </Reveal>
             <Reveal delay={300}>
-              <a href="#contacto" className="inline-flex items-center gap-3 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover active:scale-95 transition-all duration-300">
+              <a href="#contacto" className="mt-10 inline-flex items-center gap-3 bg-primary px-8 py-4 font-display font-bold text-white transition-all duration-300 hover:bg-primary-hover active:scale-95">
                 Agenda tu llamada
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </a>
             </Reveal>
           </div>
-          <div className="md:w-1/2 w-full h-[50vh] md:h-[70vh] relative mt-12 md:mt-0">
-            <Reveal delay={200} className="w-full h-full relative">
-              {/* Overlay / backdrop degradado más transparente para el 'video' o imagen hero */}
-              <div className="absolute inset-0 bg-primary-tint/40 transform -translate-x-4 translate-y-4 rounded-2xl"></div>
-              <div className="absolute inset-0 bg-primary/5 rounded-2xl z-20 pointer-events-none"></div> {/* Subtle transparent overlay in front */}
-              <img src="/renders/roofpanoramic01.jpeg" alt="Sky Home Render" className="w-full h-full object-cover rounded-2xl relative z-10 shadow-[0_0_0_1px_rgba(0,0,0,0.05)]" />
-              {/* Subtle architectural grid lines */}
-              <div className="absolute top-1/2 -right-12 w-24 h-px bg-primary/20 z-0 hidden md:block"></div>
-              <div className="absolute -bottom-12 left-1/2 w-px h-24 bg-primary/20 z-0 hidden md:block"></div>
-            </Reveal>
-          </div>
         </div>
       </section>
 
-      {/* 2. Problema / Situación actual */}
-      <section className="py-24 md:py-32 px-6 bg-white border-b border-line relative">
-        <div className="max-w-5xl mx-auto">
+      {/* 2. Tecnología estructural */}
+      <section className="py-24 md:py-32 px-6 bg-ink text-white text-center relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full max-h-96 border-[1px] border-white/5 rounded-[100%] pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
           <Reveal>
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-6 md:mb-16 md:max-w-2xl">El espacio muerto que te está costando dinero.</h2>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-10 leading-tight">Tecnología estructural probada para azoteas mexicanas.</h2>
           </Reveal>
-          
-          <div className="grid md:grid-cols-2 gap-12 md:gap-24">
-            <Reveal delay={100}>
-              <p className="text-lg text-gray leading-relaxed">
-                Tienes un espacio en tu azotea que no genera nada, y necesitas más metros habitables sin mudarte ni meterte en una obra interminable. 
-                Pensar en maestros de obra informales trae dudas: ¿Aguntará la casa? ¿Cuándo terminarán realmente?
-              </p>
-            </Reveal>
-
-            <Reveal delay={200} className="space-y-8">
-              <div className="pl-6 border-l border-line">
-                <h3 className="font-display font-bold text-lg mb-2 text-gray">La obra tradicional</h3>
-                <ul className="space-y-2 text-gray/80 text-sm">
-                  <li className="flex gap-2"><span>×</span> Tiempos de entrega indefinidos.</li>
-                  <li className="flex gap-2"><span>×</span> Sin cálculos estructurales formales.</li>
-                  <li className="flex gap-2"><span>×</span> Escombro y suciedad por meses.</li>
-                </ul>
-              </div>
-              <div className="pl-6 border-l-2 border-primary bg-primary-tint/30 py-4 px-6 rounded-r-2xl">
-                <h3 className="font-display font-bold text-lg mb-2 text-primary">La alternativa Sky Home</h3>
-                <ul className="space-y-2 text-ink text-sm font-medium">
-                  <li className="flex gap-2"><span className="text-primary">✓</span> Construcción modular en 4 meses.</li>
-                  <li className="flex gap-2"><span className="text-primary">✓</span> Ingeniería y cálculo estructural profesional.</li>
-                  <li className="flex gap-2"><span className="text-primary">✓</span> Instalación limpia sin obra húmeda excesiva.</li>
-                </ul>
-              </div>
-            </Reveal>
-          </div>
+          <Reveal delay={100}>
+            <p className="text-lg md:text-xl text-white/80 leading-relaxed md:px-12">
+              El <strong>80% de las propiedades</strong> califican para una extensión gracias a la sobredimensión estructural típica de la construcción tradicional en el país.
+              Utilizamos un <strong>sistema estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* 3. Pilares de valor & 5. Galería (MOVIDA A LA SECCIÓN 3) */}
+      {/* 3. Pilares de valor & Galería (MOVIDA A SECCIÓN 3) */}
       <section className="py-24 md:py-32 bg-white border-b border-line overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-24">
           <Reveal>
@@ -205,7 +193,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Cómo funciona (AHORA SECCIÓN 4) */}
+      {/* 4. Problema / Situación actual */}
+      <section className="py-24 md:py-32 px-6 bg-white border-b border-line relative">
+        <div className="max-w-5xl mx-auto">
+          <Reveal>
+            <h2 className="font-display text-3xl md:text-5xl font-bold mb-6 md:mb-16 md:max-w-2xl">El espacio muerto que te está costando dinero.</h2>
+          </Reveal>
+          
+          <div className="grid md:grid-cols-2 gap-12 md:gap-24">
+            <Reveal delay={100}>
+              <p className="text-lg text-gray leading-relaxed">
+                Tienes un espacio en tu azotea que no genera nada, y necesitas más metros habitables sin mudarte ni meterte en una obra interminable. 
+                Pensar en maestros de obra informales trae dudas: ¿Aguntará la casa? ¿Cuándo terminarán realmente?
+              </p>
+            </Reveal>
+
+            <Reveal delay={200} className="space-y-8">
+              <div className="pl-6 border-l border-line">
+                <h3 className="font-display font-bold text-lg mb-2 text-gray">La obra tradicional</h3>
+                <ul className="space-y-2 text-gray/80 text-sm">
+                  <li className="flex gap-2"><span>×</span> Tiempos de entrega indefinidos.</li>
+                  <li className="flex gap-2"><span>×</span> Sin cálculos estructurales formales.</li>
+                  <li className="flex gap-2"><span>×</span> Escombro y suciedad por meses.</li>
+                </ul>
+              </div>
+              <div className="pl-6 border-l-2 border-primary bg-primary-tint/30 py-4 px-6 rounded-r-2xl">
+                <h3 className="font-display font-bold text-lg mb-2 text-primary">La alternativa Sky Home</h3>
+                <ul className="space-y-2 text-ink text-sm font-medium">
+                  <li className="flex gap-2"><span className="text-primary">✓</span> Construcción modular en 4 meses.</li>
+                  <li className="flex gap-2"><span className="text-primary">✓</span> Ingeniería y cálculo estructural profesional.</li>
+                  <li className="flex gap-2"><span className="text-primary">✓</span> Instalación limpia sin obra húmeda excesiva.</li>
+                </ul>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Cómo funciona */}
       <section className="py-24 md:py-32 px-6 bg-primary text-white relative overflow-hidden">
         {/* Subtle background geometry */}
         <div className="absolute top-0 right-0 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] border-[1px] border-white/10 rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -242,7 +267,7 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 divide-y md:divide-y-0 md:divide-x divide-line">
               <Reveal delay={100} className="flex flex-col items-center md:items-start text-center md:text-left">
                 <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">DESDE</p>
-                <p className="text-5xl font-display font-bold text-primary mb-2">$15,500 <span className="text-xl text-ink font-sans font-normal">MXN / m²</span></p>
+                <p className="text-5xl font-display font-bold text-primary mb-2"><span className="text-xl text-ink font-sans font-bold uppercase">Desde </span>$15,500 <span className="text-xl text-ink font-sans font-normal">MXN / m²</span></p>
               </Reveal>
               
               <Reveal delay={200} className="flex flex-col items-center md:items-start text-center md:text-left pt-12 md:pt-0 md:pl-12">
@@ -317,22 +342,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 9. Prueba social / Respaldo técnico */}
-      <section className="py-24 md:py-32 px-6 bg-ink text-white text-center relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full max-h-96 border-[1px] border-white/5 rounded-[100%] pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <Reveal>
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-10 leading-tight">Tecnología estructural probada para azoteas mexicanas.</h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed md:px-12">
-              El <strong>80% de las propiedades</strong> califican para una extensión gracias a la sobredimensión estructural típica de la construcción tradicional en el país. 
-              Utilizamos un <strong>sistema estructural ligero</strong> soportado por nuestro equipo interno de arquitectura e ingeniería.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
       {/* 10. Preguntas frecuentes */}
       <section className="py-24 md:py-32 px-6 bg-white border-b border-line">
         <div className="max-w-3xl mx-auto">
@@ -360,10 +369,10 @@ export default function Home() {
       <section id="contacto" className="py-24 md:py-32 px-6 bg-primary-tint relative">
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row min-h-[600px] md:min-h-[500px]">
+            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row">
               
               {/* Form Sidebar */}
-              <div className="bg-primary text-white p-10 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden shrink-0">
+              <div className="bg-primary text-white p-7 sm:p-10 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden shrink-0">
                 <div className="relative z-10">
                   <h3 className="font-display font-bold text-3xl mb-6">Agenda tu llamada de descubrimiento.</h3>
                   <p className="text-white/80 leading-relaxed text-lg">Conoce si tu propiedad es viable y da el primer paso hacia tu ampliación modular.</p>
@@ -381,13 +390,13 @@ export default function Home() {
               </div>
               
               {/* Form Content */}
-              <div className="p-6 pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col">
+              <div className="p-5 pt-8 sm:p-8 sm:pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col min-h-[560px] md:min-h-[560px]">
                 {!enviado ? (
                   <form onSubmit={handleSubmit} noValidate className="flex flex-col h-full grow">
-                    <div className="relative grow">
+                    <div className="relative grow min-h-[360px]">
                       
                       {/* Paso 1 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 1 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 1 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 1 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">¿Dónde construirías tu extensión?</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -404,7 +413,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 2 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 2 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 2 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 2 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">¿Qué uso tendría ese espacio?</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -421,7 +430,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 3 */}
-                      <div className={`transition-all duration-500 absolute inset-0 overflow-y-auto hide-scrollbar pb-10 ${paso === 3 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 overflow-y-auto hide-scrollbar pb-10 ${paso === 3 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 3 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">Cuéntanos de la propiedad</h4>
                         <div className="space-y-5">
@@ -464,7 +473,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 4 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 4 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">Tus datos de contacto</h4>
                         <div className="space-y-5">
@@ -522,8 +531,9 @@ export default function Home() {
                     </div>
                     <h4 className="font-display font-bold text-3xl mb-4">¡Recibimos tu proyecto!</h4>
                     <p className="text-gray mb-10 max-w-sm">Un especialista de Sky Home revisará tu información y te contactará. Si prefieres elegir tú el horario, puedes agendar directamente.</p>
-                    <a href="https://calendly.com/disrupcion-urbana/skyhome" target="_blank" rel="noopener noreferrer" className="bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
-                      Agendar en Calendly
+                    <a href="https://calendar.app.google/jZR5BLzT7HqHEJ1f8" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
+                      Agendar en Google Calendar
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </a>
                   </div>
                 )}
