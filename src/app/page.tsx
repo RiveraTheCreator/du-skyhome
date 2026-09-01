@@ -81,38 +81,44 @@ export default function Home() {
   return (
     <main className="w-full selection:bg-primary selection:text-white">
       {/* 1. Hero */}
-      <section className="bg-white text-ink pt-28 pb-24 md:pt-40 md:pb-32 px-6 relative border-b border-line">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          <div className="md:w-1/2 relative z-10">
+      <section className="relative isolate flex min-h-[clamp(620px,88vh,900px)] items-center overflow-hidden bg-ink px-6 py-28 text-white md:py-36">
+        <video
+          className="absolute inset-0 -z-20 size-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/videos/skyhome_video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 -z-10 bg-ink/65" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink/70 to-transparent" aria-hidden="true" />
+
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="max-w-3xl">
             <Reveal>
-              <div className="inline-block border border-primary text-primary text-xs font-display font-bold uppercase tracking-[0.2em] py-2 px-4 rounded-full mb-8">
+              <div className="mb-8 inline-flex border border-white/60 px-4 py-2 text-xs font-display font-bold uppercase tracking-[0.2em]">
                 Sky Home
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] mb-8 tracking-tight">
+              <h1 className="max-w-4xl text-balance font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
                 Tu azotea puede ser un departamento que genera ingresos.
               </h1>
             </Reveal>
             <Reveal delay={200}>
-              <p className="text-lg md:text-xl text-gray mb-12 max-w-lg leading-relaxed">
+              <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-white/85 md:text-xl">
                 La mayoría de las azoteas en México solo sirven para tender ropa. La tuya puede convertirse en un activo rentable en aproximadamente 4 meses.
               </p>
             </Reveal>
             <Reveal delay={300}>
-              <a href="#contacto" className="inline-flex items-center gap-3 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover active:scale-95 transition-all duration-300">
+              <a href="#contacto" className="mt-10 inline-flex items-center gap-3 bg-primary px-8 py-4 font-display font-bold text-white transition-all duration-300 hover:bg-primary-hover active:scale-95">
                 Agenda tu llamada
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </a>
-            </Reveal>
-          </div>
-          <div className="md:w-1/2 w-full h-[50vh] md:h-[70vh] relative mt-12 md:mt-0">
-            <Reveal delay={200} className="w-full h-full relative">
-              <div className="absolute inset-0 bg-primary-tint transform -translate-x-4 translate-y-4 rounded-2xl"></div>
-              <img src="/renders/roofpanoramic01.jpeg" alt="Sky Home Render" className="w-full h-full object-cover rounded-2xl relative z-10 shadow-[0_0_0_1px_rgba(0,0,0,0.05)]" />
-              {/* Subtle architectural grid lines */}
-              <div className="absolute top-1/2 -right-12 w-24 h-px bg-primary/20 z-0 hidden md:block"></div>
-              <div className="absolute -bottom-12 left-1/2 w-px h-24 bg-primary/20 z-0 hidden md:block"></div>
             </Reveal>
           </div>
         </div>
