@@ -360,10 +360,10 @@ export default function Home() {
       <section id="contacto" className="py-24 md:py-32 px-6 bg-primary-tint relative">
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row min-h-[600px] md:min-h-[500px]">
+            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row min-h-[760px] md:min-h-[560px]">
               
               {/* Form Sidebar */}
-              <div className="bg-primary text-white p-10 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden shrink-0">
+              <div className="bg-primary text-white p-7 sm:p-10 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden shrink-0">
                 <div className="relative z-10">
                   <h3 className="font-display font-bold text-3xl mb-6">Agenda tu llamada de descubrimiento.</h3>
                   <p className="text-white/80 leading-relaxed text-lg">Conoce si tu propiedad es viable y da el primer paso hacia tu ampliación modular.</p>
@@ -381,7 +381,7 @@ export default function Home() {
               </div>
               
               {/* Form Content */}
-              <div className="p-6 pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col">
+              <div className="p-5 pt-8 sm:p-8 sm:pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col min-h-[620px] md:min-h-0">
                 {!enviado ? (
                   <form onSubmit={handleSubmit} noValidate className="flex flex-col h-full grow">
                     <div className="relative grow">
@@ -522,8 +522,9 @@ export default function Home() {
                     </div>
                     <h4 className="font-display font-bold text-3xl mb-4">¡Recibimos tu proyecto!</h4>
                     <p className="text-gray mb-10 max-w-sm">Un especialista de Sky Home revisará tu información y te contactará. Si prefieres elegir tú el horario, puedes agendar directamente.</p>
-                    <a href="https://calendly.com/disrupcion-urbana/skyhome" target="_blank" rel="noopener noreferrer" className="bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
-                      Agendar en Calendly
+                    <a href="https://calendar.app.google/jZR5BLzT7HqHEJ1f8" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
+                      Agendar en Google Calendar
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </a>
                   </div>
                 )}
