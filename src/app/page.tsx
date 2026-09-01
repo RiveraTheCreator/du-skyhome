@@ -93,9 +93,9 @@ export default function Home() {
         >
           <source src="/videos/skyhome_video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 -z-10 bg-ink/65" aria-hidden="true" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" aria-hidden="true" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink/70 to-transparent" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-ink/45" aria-hidden="true" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink/70 via-ink/35 to-ink/10" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-ink/50 to-transparent" aria-hidden="true" />
 
         <div className="mx-auto w-full max-w-7xl">
           <div className="max-w-3xl">
@@ -265,15 +265,13 @@ export default function Home() {
             
             <div className="grid md:grid-cols-2 gap-12 divide-y md:divide-y-0 md:divide-x divide-line">
               <Reveal delay={100} className="flex flex-col items-center md:items-start text-center md:text-left">
-                <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">Precio estimado</p>
-                <p className="text-5xl font-display font-bold text-primary mb-2">$15,500 <span className="text-xl text-ink font-sans font-normal">MXN / m²</span></p>
-                <p className="text-xs text-gray font-medium">[POR CONFIRMAR]</p>
+                <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">Precio</p>
+                <p className="text-5xl font-display font-bold text-primary mb-2"><span className="text-xl text-ink font-sans font-bold uppercase">Desde </span>$15,500 <span className="text-xl text-ink font-sans font-normal">MXN / m²</span></p>
               </Reveal>
               
               <Reveal delay={200} className="flex flex-col items-center md:items-start text-center md:text-left pt-12 md:pt-0 md:pl-12">
                 <p className="text-gray text-xs font-bold uppercase tracking-[0.2em] mb-4">Mínimo de construcción</p>
                 <p className="text-5xl font-display font-bold text-ink mb-2">20 <span className="text-xl font-sans font-normal">m²</span></p>
-                <p className="text-xs text-gray font-medium">[POR CONFIRMAR]</p>
               </Reveal>
             </div>
 
