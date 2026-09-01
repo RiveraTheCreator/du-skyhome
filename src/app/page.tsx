@@ -60,10 +60,14 @@ export default function Home() {
   };
 
   const isPasoValid = (step: number) => {
-    if (step === 1) return !!formData.zona;
-    if (step === 2) return !!formData.uso;
-    if (step === 3) return !!formData.construida && !!formData.metros && !!formData.cuando && !!formData.ubicacion.trim();
-    if (step === 4) return !!formData.nombre.trim() && formData.whatsapp.replace(/\D/g,'').length >= 10 && formData.correo.includes("@");
+    if (step === 1) return Boolean(formData.zona);
+    if (step === 2) return Boolean(formData.uso);
+    if (step === 3) return Boolean(formData.construida && formData.metros && formData.cuando && formData.ubicacion.trim());
+    if (step === 4) {
+      const phoneDigits = formData.whatsapp.replace(/\D/g, "");
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.correo.trim());
+      return Boolean(formData.nombre.trim()) && phoneDigits.length >= 10 && validEmail;
+    }
     return false;
   };
 
@@ -360,7 +364,7 @@ export default function Home() {
       <section id="contacto" className="py-24 md:py-32 px-6 bg-primary-tint relative">
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row min-h-[760px] md:min-h-[560px]">
+            <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden flex flex-col md:flex-row">
               
               {/* Form Sidebar */}
               <div className="bg-primary text-white p-7 sm:p-10 md:p-14 md:w-2/5 flex flex-col justify-between relative overflow-hidden shrink-0">
@@ -381,13 +385,13 @@ export default function Home() {
               </div>
               
               {/* Form Content */}
-              <div className="p-5 pt-8 sm:p-8 sm:pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col min-h-[620px] md:min-h-0">
+              <div className="p-5 pt-8 sm:p-8 sm:pt-10 md:p-14 md:w-3/5 bg-white relative flex flex-col min-h-[560px] md:min-h-[560px]">
                 {!enviado ? (
                   <form onSubmit={handleSubmit} noValidate className="flex flex-col h-full grow">
-                    <div className="relative grow">
+                    <div className="relative grow min-h-[360px]">
                       
                       {/* Paso 1 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 1 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 1 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 -translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 1 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">¿Dónde construirías tu extensión?</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -404,7 +408,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 2 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 2 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 2 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 2 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">¿Qué uso tendría ese espacio?</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -421,7 +425,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 3 */}
-                      <div className={`transition-all duration-500 absolute inset-0 overflow-y-auto hide-scrollbar pb-10 ${paso === 3 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 overflow-y-auto hide-scrollbar pb-10 ${paso === 3 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 3 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">Cuéntanos de la propiedad</h4>
                         <div className="space-y-5">
@@ -464,7 +468,7 @@ export default function Home() {
                       </div>
 
                       {/* Paso 4 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 4 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">Tus datos de contacto</h4>
                         <div className="space-y-5">
