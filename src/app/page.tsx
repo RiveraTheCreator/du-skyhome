@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, ReactNode } from "react";
-import Image from "next/image";
+
+// Webhook y Calendly configuraciones
+const WEBHOOK_URL = "https://go.alex-ai.dev/webhook-test/skyhome-lead";
+// URL PROD: "https://go.alex-ai.dev/webhook/skyhome-lead"
+const CALENDLY_URL = "PENDIENTE"; // PENDIENTE DE CONFIGURAR
 
 // Reveal Component for scroll animations
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -46,17 +50,66 @@ export default function Home() {
     nombre: "",
     whatsapp: "",
     correo: "",
+    consentimiento: false,
   });
 
   const [paso, setPaso] = useState(1);
+  const [pasoAlcanzado, setPasoAlcanzado] = useState(1);
   const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState("");
+  const [attribution, setAttribution] = useState<any>(null);
+
+  // Captura de parámetros UTM y atribución al montar
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const vp = `${window.innerWidth}x${window.innerHeight}`;
+      const device = window.innerWidth < 768 ? "movil" : "escritorio";
+
+      setAttribution({
+        utm_source: urlParams.get("utm_source") || "",
+        utm_medium: urlParams.get("utm_medium") || "",
+        utm_campaign: urlParams.get("utm_campaign") || "",
+        utm_content: urlParams.get("utm_content") || "",
+        utm_term: urlParams.get("utm_term") || "",
+        fbclid: urlParams.get("fbclid") || "",
+        gclid: urlParams.get("gclid") || "",
+        referrer: document.referrer || "",
+        landing_url: window.location.href,
+        dispositivo: device,
+        viewport: vp,
+        ts_inicio: new Date().toISOString(),
+      });
+    }
+  }, []);
+
+  // Evento del Píxel para cada paso
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("trackCustom", `form_step_${paso}`);
+    }
+  }, [paso]);
 
   const handleSelect = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      setFormData({ ...formData, [name]: (e.target as HTMLInputElement).checked });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleNextPaso = () => {
+    const nextStep = paso + 1;
+    setPaso(nextStep);
+    if (nextStep > pasoAlcanzado) {
+      setPasoAlcanzado(nextStep);
+    }
   };
 
   const isPasoValid = (step: number) => {
@@ -66,16 +119,59 @@ export default function Home() {
     if (step === 4) {
       const phoneDigits = formData.whatsapp.replace(/\D/g, "");
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.correo.trim());
-      return Boolean(formData.nombre.trim()) && phoneDigits.length >= 10 && validEmail;
+      return Boolean(formData.nombre.trim()) && phoneDigits.length >= 10 && validEmail && formData.consentimiento;
     }
     return false;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isPasoValid(4)) return;
-    console.log("Lead Sky Home:", formData);
-    setEnviado(true);
+
+    setEnviando(true);
+    setErrorEnvio("");
+
+    const ts_envio = new Date().toISOString();
+    const ts_inicio_date = attribution?.ts_inicio ? new Date(attribution.ts_inicio) : new Date();
+    const duracion_seg = Math.floor((new Date().getTime() - ts_inicio_date.getTime()) / 1000);
+
+    const payload = {
+      campana: "sky-home",
+      zona: formData.zona,
+      uso: formData.uso,
+      construida: formData.construida,
+      metros: formData.metros,
+      cuando: formData.cuando,
+      ubicacion: formData.ubicacion,
+      nombre: formData.nombre,
+      whatsapp: formData.whatsapp,
+      correo: formData.correo,
+      consentimiento: formData.consentimiento,
+      ...attribution,
+      ts_envio,
+      duracion_seg,
+      paso_alcanzado: pasoAlcanzado,
+    };
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Error en el envío");
+
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "Lead");
+      }
+
+      setEnviado(true);
+    } catch (err) {
+      setErrorEnvio("Hubo un problema al enviar tu información. Por favor, intenta de nuevo.");
+    } finally {
+      setEnviando(false);
+    }
   };
 
   return (
@@ -141,7 +237,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Pilares de valor & Galería (MOVIDA A SECCIÓN 3) */}
+      {/* 3. Pilares de valor & Galería */}
       <section className="py-24 md:py-32 bg-white border-b border-line overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-24">
           <Reveal>
@@ -473,10 +569,10 @@ export default function Home() {
                       </div>
 
                       {/* Paso 4 */}
-                      <div className={`transition-all duration-500 absolute inset-0 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
+                      <div className={`transition-all duration-500 absolute inset-0 overflow-y-auto hide-scrollbar pb-10 ${paso === 4 ? 'opacity-100 translate-x-0 z-10' : 'opacity-0 translate-x-8 pointer-events-none invisible'}`}>
                         <p className="text-xs font-display text-primary font-bold uppercase tracking-[0.2em] mb-4">Paso 4 de 4</p>
                         <h4 className="font-display font-bold text-2xl mb-8">Tus datos de contacto</h4>
-                        <div className="space-y-5">
+                        <div className="space-y-4">
                           <div>
                             <label className="block text-sm font-medium text-gray mb-2">Nombre completo</label>
                             <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Tu nombre" className="w-full p-4 border border-line rounded-xl outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-ink" />
@@ -489,39 +585,67 @@ export default function Home() {
                             <label className="block text-sm font-medium text-gray mb-2">Correo electrónico</label>
                             <input type="email" name="correo" value={formData.correo} onChange={handleChange} placeholder="tu@email.com" className="w-full p-4 border border-line rounded-xl outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-ink" />
                           </div>
+                          
+                          {/* Consentimiento */}
+                          <div className="pt-2">
+                            <label className="flex items-start gap-3 cursor-pointer group">
+                              <input 
+                                type="checkbox" 
+                                name="consentimiento"
+                                checked={formData.consentimiento}
+                                onChange={handleChange}
+                                className="mt-0.5 w-4 h-4 text-primary bg-white border-line rounded focus:ring-primary shrink-0"
+                              />
+                              <span className="text-sm text-gray leading-tight group-hover:text-ink transition-colors">
+                                Acepto el <a href="/aviso-de-privacidad" target="_blank" className="text-primary underline">aviso de privacidad</a> y el tratamiento de mis datos para ser contactado.
+                              </span>
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Navigation Buttons */}
-                    <div className="mt-auto pt-8 border-t border-line flex justify-between items-center z-20 relative bg-white">
-                      <button 
-                        type="button" 
-                        onClick={() => setPaso(paso - 1)} 
-                        className={`text-gray hover:text-ink font-medium text-sm transition-colors ${paso === 1 ? 'invisible' : 'visible'}`}
-                      >
-                        ← Atrás
-                      </button>
+                    {/* Navigation Buttons & Error message */}
+                    <div className="mt-auto pt-8 border-t border-line flex flex-col z-20 relative bg-white">
+                      {errorEnvio && (
+                        <div className="mb-4 text-red-500 text-sm font-medium text-center bg-red-50 py-2 px-4 rounded-lg">
+                          {errorEnvio}
+                        </div>
+                      )}
                       
-                      {paso < 4 ? (
+                      <div className="flex justify-between items-center">
                         <button 
                           type="button" 
-                          onClick={() => setPaso(paso + 1)} 
-                          disabled={!isPasoValid(paso)}
-                          className="bg-primary text-white font-display font-bold py-3 px-6 md:py-4 md:px-8 rounded-full disabled:bg-line disabled:text-gray/50 transition-all hover:bg-primary-hover active:scale-95"
+                          onClick={() => setPaso(paso - 1)} 
+                          className={`text-gray hover:text-ink font-medium text-sm transition-colors ${paso === 1 ? 'invisible' : 'visible'}`}
                         >
-                          Siguiente
+                          ← Atrás
                         </button>
-                      ) : (
-                        <button 
-                          type="submit" 
-                          disabled={!isPasoValid(4)}
-                          className="bg-primary text-white font-display font-bold py-3 px-6 md:py-4 md:px-8 rounded-full disabled:bg-line disabled:text-gray/50 transition-all hover:bg-primary-hover active:scale-95 flex gap-2 items-center"
-                        >
-                          Enviar proyecto
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                        </button>
-                      )}
+                        
+                        {paso < 4 ? (
+                          <button 
+                            type="button" 
+                            onClick={handleNextPaso} 
+                            disabled={!isPasoValid(paso)}
+                            className="bg-primary text-white font-display font-bold py-3 px-6 md:py-4 md:px-8 rounded-full disabled:bg-line disabled:text-gray/50 transition-all hover:bg-primary-hover active:scale-95"
+                          >
+                            Siguiente
+                          </button>
+                        ) : (
+                          <button 
+                            type="submit" 
+                            disabled={!isPasoValid(4) || enviando}
+                            className="bg-primary text-white font-display font-bold py-3 px-6 md:py-4 md:px-8 rounded-full disabled:bg-line disabled:text-gray/50 transition-all hover:bg-primary-hover active:scale-95 flex gap-2 items-center"
+                          >
+                            {enviando ? "Enviando..." : (
+                              <>
+                                Enviar proyecto
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                              </>
+                            )}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </form>
                 ) : (
@@ -529,10 +653,10 @@ export default function Home() {
                     <div className="w-20 h-20 bg-primary-tint text-primary rounded-full flex items-center justify-center mb-8">
                       <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                     </div>
-                    <h4 className="font-display font-bold text-3xl mb-4">¡Recibimos tu proyecto!</h4>
-                    <p className="text-gray mb-10 max-w-sm">Un especialista de Sky Home revisará tu información y te contactará. Si prefieres elegir tú el horario, puedes agendar directamente.</p>
-                    <a href="https://calendar.app.google/jZR5BLzT7HqHEJ1f8" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
-                      Agendar en Google Calendar
+                    <h4 className="font-display font-bold text-3xl mb-4 text-ink">Recibimos tu solicitud</h4>
+                    <p className="text-gray mb-10 max-w-sm font-sans">Un especialista te contactará pronto. Si prefieres elegir tú el horario, puedes agendar directamente.</p>
+                    <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-primary text-white font-display font-bold py-4 px-8 rounded-full hover:bg-primary-hover transition-all active:scale-95">
+                      Agendar mi llamada ahora
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </a>
                   </div>
