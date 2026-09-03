@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
-import Script from "next/script";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <head>
-        <Script id="meta-pixel" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `
+        <script dangerouslySetInnerHTML={{ __html: `
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
