@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   description: "Tu azotea puede ser un departamento que genera ingresos. Construcción modular en 4 meses.",
 };
 
-// PENDIENTE DE CONFIGURAR: Reemplaza con tu Pixel ID real
-const META_PIXEL_ID = "PENDIENTE";
+// Pixel de Meta productivo
+const META_PIXEL_ID = "1471404497878933";
 
 export default function RootLayout({
   children,
@@ -41,6 +41,15 @@ export default function RootLayout({
           fbq('init', '${META_PIXEL_ID}');
           fbq('track', 'PageView');
         `}} />
+        <noscript>
+          <img 
+            height="1" 
+            width="1" 
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased min-h-screen font-sans bg-white text-ink`}>
         {children}
