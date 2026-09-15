@@ -167,6 +167,7 @@ export default function Home() {
       }
 
       setEnviado(true);
+      window.location.href = "/gracias";
     } catch (err) {
       setErrorEnvio("Hubo un problema al enviar tu información. Por favor, intenta de nuevo.");
     } finally {
@@ -197,8 +198,11 @@ export default function Home() {
         <div className="mx-auto w-full max-w-7xl">
           <div className="max-w-3xl">
             <Reveal>
-              <div className="mb-8 inline-flex border border-white/60 px-4 py-2 text-xs font-display font-bold uppercase tracking-[0.2em]">
-                Sky Home
+              <div className="mb-8 inline-flex items-center gap-3">
+                <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-10 w-auto object-contain" />
+                <div className="border border-white/60 px-4 py-2 text-xs font-display font-bold uppercase tracking-[0.2em]">
+                  Sky Home
+                </div>
               </div>
             </Reveal>
             <Reveal delay={100}>
@@ -671,7 +675,10 @@ export default function Home() {
       <footer className="bg-ink text-white/50 py-16 px-6 text-sm border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
-            <span className="font-display font-bold text-white text-xl tracking-[0.15em] uppercase">Disrupción Urbana</span>
+            <div className="flex items-center gap-3">
+              <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-8 w-auto brightness-0 invert opacity-50 object-contain" />
+              <span className="font-display font-bold text-white text-xl tracking-[0.15em] uppercase">Disrupción Urbana</span>
+            </div>
             <p className="max-w-xs text-center md:text-left">Construcción modular sostenible sobre azoteas y espacios subutilizados.</p>
           </div>
           <div className="flex gap-8 font-medium">
