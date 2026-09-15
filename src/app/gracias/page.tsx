@@ -27,7 +27,7 @@ export default function Gracias() {
     <main className="w-full min-h-screen bg-primary-tint flex items-center justify-center p-6 selection:bg-primary selection:text-white">
       <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-line overflow-hidden w-full max-w-2xl relative p-8 md:p-16 text-center">
         {/* Progress bar at the top indicating time left before redirect */}
-        <div className="absolute top-0 left-0 h-1 bg-primary transition-all duration-1000 ease-linear" style={{ width: \`\${(timeLeft / 60) * 100}%\` }} />
+        <div className="absolute top-0 left-0 h-1 bg-primary transition-all duration-1000 ease-linear" style={{ width: `${(timeLeft / 60) * 100}%` }} />
         
         <div className="flex justify-center mb-8">
           <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-16 w-auto" />
