@@ -199,7 +199,7 @@ export default function Home() {
           <div className="max-w-3xl">
             <Reveal>
               <div className="mb-8 inline-flex items-center gap-3">
-                <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-10 w-auto object-contain" />
+                <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-16 w-auto object-contain" />
                 <div className="border border-white/60 px-4 py-2 text-xs font-display font-bold uppercase tracking-[0.2em]">
                   Sky Home
                 </div>
@@ -267,7 +267,7 @@ export default function Home() {
             
             <Reveal delay={200} className="relative h-full min-h-[400px]">
               <div className="absolute inset-0 bg-line transform translate-x-4 translate-y-4 rounded-2xl hidden md:block"></div>
-              <img src="/renders/room01.jpeg" alt="Interior Sky Home" className="absolute inset-0 w-full h-full object-cover rounded-2xl z-10" />
+              <img src="/renders/room02.jpeg" alt="Interior Sky Home" className="absolute inset-0 w-full h-full object-cover rounded-2xl z-10" />
             </Reveal>
           </div>
         </div>
@@ -282,7 +282,7 @@ export default function Home() {
           <div className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar gap-4 px-6 pb-8 md:grid md:grid-cols-3 md:gap-8 md:px-6 max-w-7xl mx-auto">
             {[
               "/renders/rooftop01.jpeg",
-              "/renders/room08.jpeg",
+              "/renders/room07.jpeg",
               "/renders/rooftop02.jpeg"
             ].map((img, idx) => (
               <Reveal key={idx} delay={idx * 150} className="snap-center shrink-0 w-[85vw] md:w-auto h-[50vh] md:h-[60vh] relative group overflow-hidden rounded-2xl border border-line">
@@ -676,7 +676,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-3">
-              <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-8 w-auto brightness-0 invert opacity-50 object-contain" />
+              <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-12 w-auto brightness-0 invert opacity-50 object-contain" />
               <span className="font-display font-bold text-white text-xl tracking-[0.15em] uppercase">Disrupción Urbana</span>
             </div>
             <p className="max-w-xs text-center md:text-left">Construcción modular sostenible sobre azoteas y espacios subutilizados.</p>

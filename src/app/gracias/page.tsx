@@ -30,7 +30,7 @@ export default function Gracias() {
         <div className="absolute top-0 left-0 h-1 bg-primary transition-all duration-1000 ease-linear" style={{ width: `${(timeLeft / 60) * 100}%` }} />
         
         <div className="flex justify-center mb-8">
-          <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-16 w-auto" />
+          <img src="/logo_du.png" alt="Logo Disrupción Urbana" className="h-24 w-auto object-contain" />
         </div>
 
         <div className="w-20 h-20 bg-primary-tint text-primary rounded-full flex items-center justify-center mx-auto mb-8">
