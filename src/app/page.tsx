@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, ReactNode } from "react";
 
 // Webhook y Calendly configuraciones
-const WEBHOOK_URL = "https://go.alex-ai.dev/webhook-test/skyhome-lead";
+const WEBHOOK_URL = "https://go.alex-ai.dev/webhook/skyhome-lead";
 // URL PROD: "https://go.alex-ai.dev/webhook/skyhome-lead"
 const CALENDLY_URL = "PENDIENTE"; // PENDIENTE DE CONFIGURAR
 
