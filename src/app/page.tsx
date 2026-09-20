@@ -327,6 +327,13 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
+          
+          <Reveal delay={300} className="mt-12 flex justify-center md:justify-start">
+            <a href="#contacto" className="inline-flex items-center gap-3 bg-primary px-8 py-4 font-display font-bold text-white transition-all duration-300 hover:bg-primary-hover active:scale-95">
+              Evaluar mi azotea
+              <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </a>
+          </Reveal>
         </div>
       </section>
 
@@ -388,6 +395,13 @@ export default function Home() {
                   <p className="text-gray text-sm leading-relaxed">Aportas solo el 33% del capital inicial, nosotros te asesoramos en el proceso.</p>
                 </div>
               </div>
+            </Reveal>
+            
+            <Reveal delay={400} className="mt-12 flex justify-center">
+              <a href="#contacto" className="inline-flex items-center gap-3 bg-primary px-8 py-4 font-display font-bold text-white transition-all duration-300 hover:bg-primary-hover active:scale-95">
+                Agenda tu llamada
+                <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </a>
             </Reveal>
           </div>
         </div>
